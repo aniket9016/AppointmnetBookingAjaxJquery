@@ -1,0 +1,94 @@
+﻿@model AppointmentBookingAjaxJquery.Models.Patient
+
+@{
+    ViewData["Title"] = "Edit Patient";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.PatientId" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PatientId" />
+
+            <!-- Patient Name -->
+            <div class="form-group">
+                <label asp-for="PatientName" class="control-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input asp-for="PatientName" class="form-control" placeholder="Enter Patient's Name" />
+                </div>
+                <span asp-validation-for="PatientName" class="text-danger"></span>
+            </div>
+
+            <!-- Age -->
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                    <input asp-for="Age" class="form-control" type="number" min="0" placeholder="Enter Age" />
+                </div>
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+
+            <!-- Gender (Now in a Single Line) -->
+            <div class="form-group">
+                <label class="control-label">Gender</label>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Gender" value="Male" checked />
+                        <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Gender" value="Female" />
+                        <label class="form-check-label">Female</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Gender" value="Other" />
+                        <label class="form-check-label">Other</label>
+                    </div>
+                </div>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <!-- Contact -->
+            <div class="form-group">
+                <label asp-for="Contact" class="control-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    <input asp-for="Contact" class="form-control" type="number" min="1000000000" max="9999999999" placeholder="Enter Contact Number" />
+                </div>
+                <span asp-validation-for="Contact" class="text-danger"></span>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <textarea asp-for="Address" class="form-control" rows="3" placeholder="Enter Address"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <!-- Disease -->
+            <div class="form-group">
+                <label asp-for="Disease" class="control-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-virus"></i></span>
+                    <input asp-for="Disease" class="form-control" placeholder="Enter Disease" />
+                </div>
+                <span asp-validation-for="Disease" class="text-danger"></span>
+            </div>
+
+            <br />
+            <!-- Submit Button -->
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-save"></i> Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

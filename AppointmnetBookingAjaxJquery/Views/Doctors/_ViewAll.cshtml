@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AppointmentBookingAjaxJquery.Models.Doctor>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DoctorName)</th>
+            <th>@Html.DisplayNameFor(model => model.Specialization)</th>
+            <th>@Html.DisplayNameFor(model => model.Contact)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>
+                <a onclick="showInPopup('@Url.Action("AddOrEdit", "Doctors")', 'New Doctor')" class="btn btn-success text-white">
+                    <i class="fas fa-plus"></i> New Doctor
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.DoctorName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Specialization)</td>
+                <td>@Html.DisplayFor(modelItem => item.Contact)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "Doctors", new { id = item.DoctorId })', 'Edit Doctor')" class="btn btn-info text-white">
+                        <i class="fas fa-pencil-alt"></i> Edit
+                    </a>
+                    |
+                    <form asp-action="Delete" asp-route-id="@item.DoctorId" onsubmit="return jQueryAjaxDelete(this);" class="d-inline">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

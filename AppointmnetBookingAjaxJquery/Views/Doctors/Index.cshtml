@@ -1,0 +1,11 @@
+﻿@model IEnumerable<AppointmentBookingAjaxJquery.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<h1 class="text-center"><i class="fas fa-user-md text-primary"></i> Doctor List</h1>
+
+<div id="view-all">
+    @await Html.PartialAsync("_ViewAll", Model)
+</div>

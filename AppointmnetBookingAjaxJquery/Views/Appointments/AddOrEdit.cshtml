@@ -1,0 +1,65 @@
+﻿@model AppointmentBookingAjaxJquery.Models.Appointment
+
+@{
+    ViewData["Title"] = "Edit Appointment";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <!-- Patient Dropdown -->
+            <div class="form-group">
+                <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class="form-control">
+                    <option value="">--- Select Patient ---</option>
+                    @foreach (var patient in ViewBag.Patients)
+                    {
+                        <option value="@patient.PatientId">@patient.PatientName</option>
+                    }
+                </select>
+                <span asp-validation-for="PatientId" class="text-danger"></span>
+            </div>
+
+            <!-- Doctor Dropdown -->
+            <div class="form-group">
+                <label asp-for="DoctorId" class="control-label"></label>
+                <select asp-for="DoctorId" class="form-control">
+                    <option value="">--- Select Doctor ---</option>
+                    @foreach (var doctor in ViewBag.Doctors)
+                    {
+                        <option value="@doctor.DoctorId">@doctor.DoctorName</option>
+                    }
+                </select>
+                <span asp-validation-for="DoctorId" class="text-danger"></span>
+            </div>
+
+            <!-- Appointment Date (Restrict Past Dates) -->
+            <div class="form-group">
+                <label asp-for="AppointmentDate" class="control-label"></label>
+                <input asp-for="AppointmentDate" class="form-control" type="date" id="appointmentDate" />
+                <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+            </div>
+
+            <!-- Status Dropdown -->
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Booked">Booked</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Others">Others</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary w-100" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<AppointmentBookingAjaxJquery.Models.Appointment>
+<div class="card shadow-sm p-3 mb-4 bg-white rounded">
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Appointments", FormMethod.Get, new { @class = "row g-2 align-items-center" }))
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="input-group">
+                    <input type="text" name="searchkey" class="form-control" placeholder="Search by Patient or Doctor Name..." value="@ViewData["searchkey"]">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-auto">
+                <a href="@Url.Action("Index", "Appointments")" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Doctor Name</th>
+            <th>Appointment Date</th>
+            <th>Status</th>
+            <th>
+                <a onclick="showInPopup('@Url.Action("AddOrEdit", "Appointments")', 'New Appointment')" class="btn btn-success text-white">
+                    <i class="fas fa-plus"></i> New Appointment
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Patient.PatientName</td>
+                <td>@item.Doctor.DoctorName</td>
+                <td>@item.AppointmentDate?.ToString("dd-MMM-yyyy")</td>
+                <td>@item.Status</td>
+                <td>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "Appointments", new { id = item.Id })', 'Edit Appointment')" class="btn btn-info text-white">
+                        <i class="fas fa-pencil-alt"></i> Edit
+                    </a>
+                    |
+                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this);" class="d-inline">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
